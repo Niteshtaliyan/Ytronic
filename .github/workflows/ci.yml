@@ -22,6 +22,17 @@ jobs:
         run: npm install cypress
         working-directory: ./path/to/your/cypress/tests # Change this to the directory containing your Cypress tests
 
+      # - name: Run Cypress tests
+      #   run: npx cypress run
+      #   working-directory: ./path/to/your/cypress/tests # Change this to the directory containing your Cypress tests
+
       - name: Run Cypress tests
-        run: npx cypress run
-        working-directory: ./path/to/your/cypress/tests # Change this to the directory containing your Cypress tests
+        run: |
+          npx cypress run
+          if [ $? -eq 0 ]; then
+            echo "All tests passed, approving the pull request."
+          else
+            echo "Some tests failed, rejecting the pull request."
+          fi
+        working-directory: ./path/to/your/cypress/tests
+
