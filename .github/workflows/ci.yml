@@ -1,38 +1,25 @@
-name: Continuous Integration
+name: Cypress Tests
 
 on:
-  pull_request:
+  push:
     branches:
-      - main
+      - main  # Change this to your main branch name
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '14' # Use the appropriate Node.js version
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: 14  # Choose your desired Node.js version
 
-      - name: Install Cypress
-        run: npm install cypress
-        working-directory: ./path/to/your/cypress/tests # Change this to the directory containing your Cypress tests
+    - name: Install Dependencies
+      run: npm install
 
-      # - name: Run Cypress tests
-      #   run: npx cypress run
-      #   working-directory: ./path/to/your/cypress/tests # Change this to the directory containing your Cypress tests
-
-      - name: Run Cypress tests
-        run: |
-          npx cypress run
-          if [ $? -eq 0 ]; then
-            echo "All tests passed, approving the pull request."
-          else
-            echo "Some tests failed, rejecting the pull request."
-          fi
-        working-directory: ./path/to/your/cypress/tests
-
+    - name: Run Cypress Tests
+      run: npm run cy:run  # Adjust this script to match your Cypress test command
