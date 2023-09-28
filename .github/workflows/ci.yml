@@ -1,0 +1,27 @@
+name: Continuous Integration
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14' # Use the appropriate Node.js version
+
+      - name: Install Cypress
+        run: npm install cypress
+        working-directory: ./path/to/your/cypress/tests # Change this to the directory containing your Cypress tests
+
+      - name: Run Cypress tests
+        run: npx cypress run
+        working-directory: ./path/to/your/cypress/tests # Change this to the directory containing your Cypress tests
